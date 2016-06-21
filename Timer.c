@@ -12,14 +12,6 @@ void TimerInit(void) {
     TIM4_CR1 = 0x01;  
 }
 
-#pragma vector=0x19
-__interrupt void TIM4_UPD_OVF_IRQHandler(void)
-{
-    INTOFF
-    TIM4_SR = 0x00;
 
-    INTEN
-    return;
-}
 
 

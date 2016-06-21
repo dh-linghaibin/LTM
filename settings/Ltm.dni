@@ -32,9 +32,29 @@ UseAuto=0
 TypeViolation=1
 UnspecRange=1
 ActionState=1
-[Aliases]
-Count=0
-SuppressDialog=0
 [Trace1]
 Enabled=0
 ShowSource=1
+[DebugChecksum]
+Checksum=-342266138
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[DataSample]
+LogEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
+[Breakpoints]
+Count=0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Aliases]
+Count=0
+SuppressDialog=0

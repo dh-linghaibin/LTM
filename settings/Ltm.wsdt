@@ -22,9 +22,14 @@
         <ColumnWidth2>256</ColumnWidth2>
         <ColumnWidth3>64</ColumnWidth3>
       </Build>
+      <TerminalIO/>
+      <Debug-Log>
+        <ColumnWidth0>18</ColumnWidth0>
+        <ColumnWidth1>2503</ColumnWidth1>
+      </Debug-Log>
     </Static>
     <Windows>
-      <Wnd1>
+      <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-9338-10171</Identity>
@@ -33,13 +38,14 @@
             <Session>
               <NodeDict>
                 <ExpandedNode>Ltm</ExpandedNode>
+                <ExpandedNode>Ltm/Type.c</ExpandedNode>
               </NodeDict>
             </Session>
           </Tab>
         </Tabs>
         <SelectedTab>0</SelectedTab>
-      </Wnd1>
-      <Wnd0>
+      </Wnd0>
+      <Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-5448-10449</Identity>
@@ -47,16 +53,18 @@
             <Factory>Build</Factory>
             <Session/>
           </Tab>
+          <Tab>
+            <Identity>TabID-27974-6529</Identity>
+            <TabName>Debug Log</TabName>
+            <Factory>Debug-Log</Factory>
+            <Session/>
+          </Tab>
         </Tabs>
         <SelectedTab>0</SelectedTab>
-      </Wnd0>
+      </Wnd1>
     </Windows>
     <Editor>
       <Pane>
-        <Tab>
-          <Factory>TextEditor</Factory>
-          <Filename>C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\stm8\doc\infocenter\index.ENU.html</Filename>
-        </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
           <Filename>$WS_DIR$\main.c</Filename>
@@ -66,8 +74,8 @@
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
           <YPos2>0</YPos2>
-          <SelStart2>534</SelStart2>
-          <SelEnd2>534</SelEnd2>
+          <SelStart2>539</SelStart2>
+          <SelEnd2>539</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -78,8 +86,8 @@
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
           <YPos2>0</YPos2>
-          <SelStart2>355</SelStart2>
-          <SelEnd2>355</SelEnd2>
+          <SelStart2>357</SelStart2>
+          <SelEnd2>357</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -90,8 +98,8 @@
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
           <YPos2>0</YPos2>
-          <SelStart2>82</SelStart2>
-          <SelEnd2>82</SelEnd2>
+          <SelStart2>0</SelStart2>
+          <SelEnd2>0</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -113,11 +121,11 @@
           <SelStart>0</SelStart>
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
-          <YPos2>2</YPos2>
-          <SelStart2>865</SelStart2>
-          <SelEnd2>865</SelEnd2>
+          <YPos2>16</YPos2>
+          <SelStart2>1511</SelStart2>
+          <SelEnd2>1511</SelEnd2>
         </Tab>
-        <ActiveTab>5</ActiveTab>
+        <ActiveTab>4</ActiveTab>
         <Tab>
           <Factory>TextEditor</Factory>
           <Filename>$WS_DIR$\Moto.h</Filename>
@@ -126,9 +134,57 @@
           <SelStart>0</SelStart>
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
+          <YPos2>9</YPos2>
+          <SelStart2>829</SelStart2>
+          <SelEnd2>843</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\Delay.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
           <YPos2>0</YPos2>
-          <SelStart2>505</SelStart2>
-          <SelEnd2>505</SelEnd2>
+          <SelStart2>0</SelStart2>
+          <SelEnd2>0</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\Type.h</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>286</SelStart2>
+          <SelEnd2>291</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\Eeprom.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>0</SelStart2>
+          <SelEnd2>0</SelEnd2>
+        </Tab>
+        <Tab>
+          <Factory>TextEditor</Factory>
+          <Filename>$WS_DIR$\Type.c</Filename>
+          <XPos>0</XPos>
+          <YPos>0</YPos>
+          <SelStart>0</SelStart>
+          <SelEnd>0</SelEnd>
+          <XPos2>0</XPos2>
+          <YPos2>0</YPos2>
+          <SelStart2>0</SelStart2>
+          <SelEnd2>0</SelEnd2>
         </Tab>
       </Pane>
       <ActivePane>0</ActivePane>
@@ -149,26 +205,32 @@
             </Toolbar-05f948a0>
           </Sizes>
         </Row0>
+        <Row1>
+          <Sizes/>
+        </Row1>
+        <Row2>
+          <Sizes/>
+        </Row2>
       </Top>
       <Left>
         <Row0>
           <Sizes>
-            <Wnd1>
+            <Wnd0>
               <Rect>
                 <Top>-2</Top>
                 <Left>-2</Left>
-                <Bottom>443</Bottom>
+                <Bottom>764</Bottom>
                 <Right>198</Right>
                 <x>-2</x>
                 <y>-2</y>
                 <xscreen>200</xscreen>
                 <yscreen>200</yscreen>
-                <sizeHorzCX>149142</sizeHorzCX>
-                <sizeHorzCY>291545</sizeHorzCY>
-                <sizeVertCX>149142</sizeVertCX>
-                <sizeVertCY>648688</sizeVertCY>
+                <sizeHorzCX>78125</sizeHorzCX>
+                <sizeHorzCY>198610</sizeHorzCY>
+                <sizeVertCX>78125</sizeVertCX>
+                <sizeVertCY>760675</sizeVertCY>
               </Rect>
-            </Wnd1>
+            </Wnd0>
           </Sizes>
         </Row0>
       </Left>
@@ -180,22 +242,22 @@
       <Bottom>
         <Row0>
           <Sizes>
-            <Wnd0>
+            <Wnd1>
               <Rect>
                 <Top>-2</Top>
                 <Left>-2</Left>
                 <Bottom>198</Bottom>
-                <Right>1343</Right>
+                <Right>2562</Right>
                 <x>-2</x>
                 <y>-2</y>
-                <xscreen>1345</xscreen>
+                <xscreen>2564</xscreen>
                 <yscreen>200</yscreen>
-                <sizeHorzCX>1002983</sizeHorzCX>
-                <sizeHorzCY>291545</sizeHorzCY>
-                <sizeVertCX>149142</sizeVertCX>
-                <sizeVertCY>291545</sizeVertCY>
+                <sizeHorzCX>1001562</sizeHorzCX>
+                <sizeHorzCY>198610</sizeHorzCY>
+                <sizeVertCX>78125</sizeVertCX>
+                <sizeVertCY>198610</sizeVertCY>
               </Rect>
-            </Wnd0>
+            </Wnd1>
           </Sizes>
         </Row0>
       </Bottom>
