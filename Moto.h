@@ -34,6 +34,14 @@ typedef enum
     LTK_INVALID_LED
 }ltk_led_t;     
 
+/*步进电机参数*/
+typedef struct moto{
+    /*需要走的布数*/
+    u16 setp;
+    /*需要走的速度*/
+    u8 sleep;
+}moto;
+
 /*电机 使能*/
 #define MOTO_ENABLE     PA_ODR_ODR1
 /*电机 方向*/

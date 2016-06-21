@@ -29,7 +29,7 @@
       </Debug-Log>
     </Static>
     <Windows>
-      <Wnd0>
+      <Wnd2>
         <Tabs>
           <Tab>
             <Identity>TabID-9338-10171</Identity>
@@ -44,8 +44,8 @@
           </Tab>
         </Tabs>
         <SelectedTab>0</SelectedTab>
-      </Wnd0>
-      <Wnd1>
+      </Wnd2>
+      <Wnd3>
         <Tabs>
           <Tab>
             <Identity>TabID-5448-10449</Identity>
@@ -61,7 +61,7 @@
           </Tab>
         </Tabs>
         <SelectedTab>0</SelectedTab>
-      </Wnd1>
+      </Wnd3>
     </Windows>
     <Editor>
       <Pane>
@@ -74,8 +74,8 @@
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
           <YPos2>0</YPos2>
-          <SelStart2>539</SelStart2>
-          <SelEnd2>539</SelEnd2>
+          <SelStart2>349</SelStart2>
+          <SelEnd2>349</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -121,9 +121,9 @@
           <SelStart>0</SelStart>
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
-          <YPos2>16</YPos2>
-          <SelStart2>1511</SelStart2>
-          <SelEnd2>1511</SelEnd2>
+          <YPos2>18</YPos2>
+          <SelStart2>1610</SelStart2>
+          <SelEnd2>1610</SelEnd2>
         </Tab>
         <ActiveTab>4</ActiveTab>
         <Tab>
@@ -134,9 +134,9 @@
           <SelStart>0</SelStart>
           <SelEnd>0</SelEnd>
           <XPos2>0</XPos2>
-          <YPos2>9</YPos2>
-          <SelStart2>829</SelStart2>
-          <SelEnd2>843</SelEnd2>
+          <YPos2>14</YPos2>
+          <SelStart2>849</SelStart2>
+          <SelEnd2>849</SelEnd2>
         </Tab>
         <Tab>
           <Factory>TextEditor</Factory>
@@ -215,7 +215,7 @@
       <Left>
         <Row0>
           <Sizes>
-            <Wnd0>
+            <Wnd2>
               <Rect>
                 <Top>-2</Top>
                 <Left>-2</Left>
@@ -230,7 +230,7 @@
                 <sizeVertCX>78125</sizeVertCX>
                 <sizeVertCY>760675</sizeVertCY>
               </Rect>
-            </Wnd0>
+            </Wnd2>
           </Sizes>
         </Row0>
       </Left>
@@ -242,7 +242,7 @@
       <Bottom>
         <Row0>
           <Sizes>
-            <Wnd1>
+            <Wnd3>
               <Rect>
                 <Top>-2</Top>
                 <Left>-2</Left>
@@ -257,7 +257,7 @@
                 <sizeVertCX>78125</sizeVertCX>
                 <sizeVertCY>198610</sizeVertCY>
               </Rect>
-            </Wnd1>
+            </Wnd3>
           </Sizes>
         </Row0>
       </Bottom>

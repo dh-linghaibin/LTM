@@ -16,6 +16,9 @@
 * 历史信息：
 *******************************************************************************/
 #include "Moto.h"
+
+/*定义电机参数*/
+static moto moto_one;
 /**********************************************函数定义***************************************************** 
 * 函数名称: void MotoInit(void) 
 * 输入参数: void 
@@ -50,6 +53,8 @@ void MotoInit(void) {
     /*关闭电机*/
     MOTO_ENABLE = 1;
     MOTO_DIRECTION = 0;
+    /*初始化电机速度*/
+    moto_one.sleep = 20;
 }
 
 #pragma vector=0x19
@@ -62,7 +67,7 @@ __interrupt void TIM4_UPD_OVF_IRQHandler(void)
     /*累加计数*/
     pulse_count++;
     /*判断周期*/
-    if(pulse_count > 1) {
+    if(pulse_count > moto_one.sleep) {
         static u8 dir = 0;
         pulse_count = 0;
         /*产生脉冲*/
@@ -72,6 +77,9 @@ __interrupt void TIM4_UPD_OVF_IRQHandler(void)
         } else {
             dir = 0;
             MOTO_PULSE = 1;
+        }
+        if(moto_one.setp > 0) {
+            moto_one.setp--;
         }
     }
     INTEN
