@@ -28,11 +28,19 @@
 
 typedef enum
 {
-    LTK_LED0 = 0,
-    LTK_LED1 = 1,
-    LTK_LED2 = 2,
-    LTK_INVALID_LED
-}ltk_led_t;     
+    /*电机正转*/
+    dir_story = 1,
+    /*电机反转*/
+    dir_reversion = 0,
+    /*电机打开*/
+    moto_open = 1,
+    /*关闭电机*/
+    moto_cloose = 0,
+    /*电机形成*/
+    moto_all_setp = 13800,
+    /*电机起步速度*/
+    moto_start_sleep = 20,
+}moto_parameter;     
 
 /*步进电机参数*/
 typedef struct moto{
@@ -40,6 +48,13 @@ typedef struct moto{
     u16 setp;
     /*需要走的速度*/
     u8 sleep;
+    /*加减速计数位*/
+    u16 sleep_count;
+    /*一共需要走的步数*/
+    u8 all_setp_s;
+    u16 all_setp;
+    /*电机方向*/
+    u8 direction;
 }moto;
 
 /*电机 使能*/

@@ -44,17 +44,21 @@ void MotoInit(void) {
     TIM4_IER = 0x00;       
     TIM4_EGR = 0x01;
     TIM4_PSCR = 0x01;// 计数器时钟=主时钟/128=16MHZ/128
-    TIM4_ARR = 0x3b;// 设定重装载时的寄存器值，255是最大值
+    TIM4_ARR = 0x10;// 设定重装载时的寄存器值，255是最大值
     //TIM4_CNTR = 0x00;// 设定计数器的初值
     // 定时周期=(ARR+1)*64=16320uS
     TIM4_IER = 0x01;//   
     TIM4_CR1 = 0x01;  
     
     /*关闭电机*/
-    MOTO_ENABLE = 1;
-    MOTO_DIRECTION = 0;
+    MOTO_ENABLE = dir_story;
+    /*设置步进电机方向*/
+    moto_one.direction = dir_story;
+    MOTO_DIRECTION = moto_one.direction;
     /*初始化电机速度*/
-    moto_one.sleep = 20;
+    moto_one.sleep = moto_start_sleep;
+    /*初始化需要走的步数*/
+    moto_one.setp = moto_all_setp;
 }
 
 #pragma vector=0x19
@@ -78,8 +82,43 @@ __interrupt void TIM4_UPD_OVF_IRQHandler(void)
             dir = 0;
             MOTO_PULSE = 1;
         }
+        moto_one.all_setp_s++;
+        /*判断是不是快走完了*/
+        if(moto_one.all_setp_s > 100) {
+            moto_one.all_setp_s = 0;
+            moto_one.all_setp++;
+            if(moto_one.all_setp > 13730) {
+                /*开始减速*/
+                if(moto_one.sleep < 30) {
+                    moto_one.sleep++;
+                }
+            }
+            if(moto_one.all_setp > 13800) {
+                moto_one.all_setp = 0;
+                /*关闭电机*/
+                MOTO_ENABLE = 0;
+                /*设置步进电机方向*/
+                moto_one.direction = ~moto_one.direction;
+                MOTO_DIRECTION = moto_one.direction;
+                /*设置步进电机起步速度*/
+                moto_one.sleep = 30;
+                /*打开电机*/
+                MOTO_ENABLE = 1;
+            }
+        }
         if(moto_one.setp > 0) {
-            moto_one.setp--;
+            /*可以动作*/
+            //moto_one.setp--;
+            moto_one.sleep_count++;
+            if(moto_one.sleep_count > 200) {
+                moto_one.sleep_count = 0;
+                /*加速*/
+                if(moto_one.sleep > 4) {
+                    moto_one.sleep--;
+                }
+            }
+        } else {
+            /*步数已经走完*/
         }
     }
     INTEN

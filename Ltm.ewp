@@ -1569,6 +1569,9 @@
     </settings>
   </configuration>
   <file>
+    <name>$PROJ_DIR$\Com.c</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\Delay.c</name>
   </file>
   <file>
