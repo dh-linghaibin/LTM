@@ -40,18 +40,23 @@ void MotoInit(void) {
     PA_DDR_DDR3 = 1;
     PA_CR1_C13 = 1;
     PA_CR2_C23 = 0;
+    /*限位开关*/
+    PC_DDR_DDR3 = 0;
+    PC_CR1_C13 = 0;
+    PC_CR2_C23 = 0;
     /*定时器初始化*/
     TIM4_IER = 0x00;       
     TIM4_EGR = 0x01;
     TIM4_PSCR = 0x01;// 计数器时钟=主时钟/128=16MHZ/128
-    TIM4_ARR = 0x10;// 设定重装载时的寄存器值，255是最大值
+    TIM4_ARR = 0x30;// 设定重装载时的寄存器值，255是最大值 0x10
     //TIM4_CNTR = 0x00;// 设定计数器的初值
     // 定时周期=(ARR+1)*64=16320uS
-    TIM4_IER = 0x01;//   
-    TIM4_CR1 = 0x01;  
+    TIM4_IER = 0x01;//  
+    /*关闭电机 0x01 打开*/
+    TIM4_CR1 = 0x00;  
     
     /*关闭电机*/
-    MOTO_ENABLE = dir_story;
+    MOTO_ENABLE = moto_cloose;
     /*设置步进电机方向*/
     moto_one.direction = dir_story;
     MOTO_DIRECTION = moto_one.direction;
@@ -59,6 +64,62 @@ void MotoInit(void) {
     moto_one.sleep = moto_start_sleep;
     /*初始化需要走的步数*/
     moto_one.setp = moto_all_setp;
+    /*开机运行关门*/
+    MotoSet(dir_story);
+}
+/**********************************************函数定义***************************************************** 
+* 函数名称: void MotoReadLimit(void) 
+* 输入参数: void 
+* 返回参数: void  
+* 功    能:   
+* 作    者: by lhb_steven
+* 日    期: 2016/6/23
+************************************************************************************************************/ 
+void MotoReadLimit(void) {
+    /*只有关门的时候才有限位*/
+    if(moto_one.direction == dir_story) {
+        if(MOTO_LIMIT == 0) {
+            moto_one.all_setp = 0;
+            /*关闭电机*/
+            MOTO_ENABLE = moto_cloose;
+            /*设置步进电机起步速度*/
+            moto_one.sleep = moto_start_sleep;
+            /*关闭电机*/
+            TIM4_CR1 = 0x00;  
+            /*设置电机位置*/
+            moto_one.position = 0;
+        }
+    }
+}
+/**********************************************函数定义***************************************************** 
+* 函数名称: void MotoSet(u8 diection) 
+* 输入参数: u8 diection 
+* 返回参数: void  
+* 功    能:   
+* 作    者: by lhb_steven
+* 日    期: 2016/6/23
+************************************************************************************************************/ 
+void MotoSet(moto_parameter diection) {
+    /*是否在需要到达的位置*/
+    if(diection == moto_one.position) {
+        
+    } else {
+        if(diection == dir_story) {
+            /*设置步进电机方向*/
+            moto_one.direction = dir_story;
+        } else {
+            /*设置步进电机方向*/
+            moto_one.direction = dir_reversion;
+        }
+        /*打开电机*/
+        MOTO_ENABLE = moto_open;
+        /*设置步进电机方向*/
+        MOTO_DIRECTION = moto_one.direction;
+        /*初始化电机速度*/
+        moto_one.sleep = moto_start_sleep;
+        /*打开电机*/
+        TIM4_CR1 = 0x01;  
+    }
 }
 
 #pragma vector=0x19
@@ -68,57 +129,60 @@ __interrupt void TIM4_UPD_OVF_IRQHandler(void)
     static u16 pulse_count = 0;
     /*清除中断标志*/
     TIM4_SR = 0x00;
+    
     /*累加计数*/
     pulse_count++;
-    /*判断周期*/
     if(pulse_count > moto_one.sleep) {
+         /*判断周期*/
         static u8 dir = 0;
         pulse_count = 0;
         /*产生脉冲*/
-        if(dir == 0) {
-            dir = 1;
-            MOTO_PULSE = 0;
-        } else {
-            dir = 0;
-            MOTO_PULSE = 1;
-        }
+        dir = ~dir;
+        MOTO_PULSE = dir;
+        /*统计已走步数*/
         moto_one.all_setp_s++;
         /*判断是不是快走完了*/
-        if(moto_one.all_setp_s > 100) {
+        if(moto_one.all_setp_s > moto_add_time) {
             moto_one.all_setp_s = 0;
+            /*每100步累加一次*/
             moto_one.all_setp++;
-            if(moto_one.all_setp > 13730) {
+            /*加速阶段*/
+            if(moto_one.all_setp < (moto_start_sleep-moto_end_sleep) ) {
+                if(moto_one.sleep > moto_end_sleep) {
+                    /*需要加速*/
+                    //moto_one.sleep_count++;
+                   // if(moto_one.sleep_count > 2) {
+                      //  moto_one.sleep_count = 0;
+                        /*加速*/
+                        moto_one.sleep--;
+                    //}
+                }  
+            }
+             /*减速阶段*/
+            else if( (moto_one.all_setp > (moto_all_setp-100)) 
+                    && (moto_one.all_setp < moto_all_setp) ){
                 /*开始减速*/
-                if(moto_one.sleep < 30) {
+                if(moto_one.sleep < moto_start_sleep) {
                     moto_one.sleep++;
                 }
             }
-            if(moto_one.all_setp > 13800) {
+            /*停止 走完全程*/
+            else if(moto_one.all_setp > moto_all_setp) {
                 moto_one.all_setp = 0;
                 /*关闭电机*/
-                MOTO_ENABLE = 0;
+                MOTO_ENABLE = moto_cloose;
                 /*设置步进电机方向*/
-                moto_one.direction = ~moto_one.direction;
-                MOTO_DIRECTION = moto_one.direction;
+                //moto_one.direction = ~moto_one.direction;
+                //MOTO_DIRECTION = moto_one.direction;
                 /*设置步进电机起步速度*/
-                moto_one.sleep = 30;
+                moto_one.sleep = moto_start_sleep;
                 /*打开电机*/
-                MOTO_ENABLE = 1;
+                //MOTO_ENABLE = moto_open;
+                /*关闭电机*/
+                TIM4_CR1 = 0x00;  
+            } else {
+                
             }
-        }
-        if(moto_one.setp > 0) {
-            /*可以动作*/
-            //moto_one.setp--;
-            moto_one.sleep_count++;
-            if(moto_one.sleep_count > 200) {
-                moto_one.sleep_count = 0;
-                /*加速*/
-                if(moto_one.sleep > 4) {
-                    moto_one.sleep--;
-                }
-            }
-        } else {
-            /*步数已经走完*/
         }
     }
     INTEN

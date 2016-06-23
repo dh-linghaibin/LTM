@@ -36,7 +36,7 @@ u8 EepromRead(u8 addr) {
 
 
 void Write_Option_Byte(void) {   
-    unsigned char opt[6] = {0,0,0,0,0,0};
+    //unsigned char opt[6] = {0,0,0,0,0,0};
     /*Ω‚À¯Flash*/
     do {
         FLASH_DUKR = 0xAE;
@@ -52,7 +52,7 @@ void Write_Option_Byte(void) {
 //    *((unsigned char *)0x4801) = opt[1];
 //    *((unsigned char *)0x4802) = ~opt[1];
 //
-    *((unsigned char *)0x4803) = 0x01;//opt[2];
+//    *((unsigned char *)0x4803) = 0x01;//opt[2];
 //    *((unsigned char *)0x4804) = ~opt[2];
 //
 //    *((unsigned char *)0x4805) = opt[3];

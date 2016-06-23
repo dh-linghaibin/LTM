@@ -36,10 +36,14 @@ typedef enum
     moto_open = 1,
     /*关闭电机*/
     moto_cloose = 0,
-    /*电机形成*/
-    moto_all_setp = 13800,
+    /*电机一次最多的步数 13800*/
+    moto_all_setp = 1000,
     /*电机起步速度*/
-    moto_start_sleep = 20,
+    moto_start_sleep = 18,
+    /*电机最高速度*/
+    moto_end_sleep = 3,
+    /*电机加速时间*/
+    moto_add_time = 100,
 }moto_parameter;     
 
 /*步进电机参数*/
@@ -55,6 +59,8 @@ typedef struct moto{
     u16 all_setp;
     /*电机方向*/
     u8 direction;
+    /*电机所在的位置*/
+    u8 position;
 }moto;
 
 /*电机 使能*/
@@ -63,7 +69,8 @@ typedef struct moto{
 #define MOTO_DIRECTION  PA_ODR_ODR2
 /*电机 脉冲*/
 #define MOTO_PULSE      PA_ODR_ODR3
-
+/*到位 开关*/
+#define MOTO_LIMIT      PC_IDR_IDR3
 /**********************************************函数定义***************************************************** 
 * 函数名称: void MotoInit(void) 
 * 输入参数: void 
@@ -73,6 +80,24 @@ typedef struct moto{
 * 日    期: 2016/6/21
 ************************************************************************************************************/ 
 void MotoInit(void);     
+/**********************************************函数定义***************************************************** 
+* 函数名称: void MotoReadLimit(void) 
+* 输入参数: void 
+* 返回参数: void  
+* 功    能:   
+* 作    者: by lhb_steven
+* 日    期: 2016/6/23
+************************************************************************************************************/ 
+void MotoReadLimit(void);
+/**********************************************函数定义***************************************************** 
+* 函数名称: void MotoSet(u8 diection) 
+* 输入参数: u8 diection 
+* 返回参数: void  
+* 功    能:   
+* 作    者: by lhb_steven
+* 日    期: 2016/6/23
+************************************************************************************************************/ 
+void MotoSet(moto_parameter diection);
 
 #ifdef __cplusplus
 }

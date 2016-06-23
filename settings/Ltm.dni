@@ -36,11 +36,13 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-1932089635
+Checksum=-2138390961
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
+[watch_formats]
+Fmt0={W}42:moto_one.sleep	3	0
 [DataSample]
 LogEnabled=0
 GraphEnabled=0
