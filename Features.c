@@ -17,6 +17,7 @@
 *******************************************************************************/
 #include "Features.h"
 #include "Com.h"
+#include "Moto.h"
 /**********************************************函数定义***************************************************** 
 * 函数名称: void FeaturesInit(void) 
 * 输入参数: void 
@@ -39,15 +40,30 @@ void FeaturesInit(void) {
 void FeaturesHandle(void) {
     /*处理串口命令*/
     if(ComGetFlag() == 0x01) {
-        switch(ComGetDate(1)) {
-            /*打开盒子*/
-            case 0x01:break;
-            /*关闭盒子*/
-            case 0x02:break;
-            /*复位盒子*/
-            case 0x03:break;
-            case 0x04:break;
-            default:break;
+        ComSetFlag(0x00);
+        if(ComCheck() == 0x01) {
+            switch(ComGetDate(1)) {
+                /*打开盒子*/
+                case 0x01:
+                    ComSend(0x80,0x01,0x00,0x00);
+                    MotoSet(dir_story);
+                    break;
+                /*关闭盒子*/
+                case 0x02:
+                    ComSend(0x80,0x02,0x00,0x00);
+                    MotoSet(dir_reversion);
+                    break;
+                /*复位盒子*/
+                case 0x03:
+                    ComSend(0x80,0x03,0x00,0x00);
+                    MotoSet(dir_story);
+                    break;
+                case 0x04:break;
+                default:break;
+            }   
+        } else {
+            /*检验失败*/
+            ComSend(0x44,0x00,0x00,0x00);
         }
     }
 } 

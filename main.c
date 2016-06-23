@@ -19,6 +19,7 @@
 #include "Moto.h"
 #include "Com.h"
 #include "Features.h"
+#include "Test.h"
 
 int main( void ) {
     /*系统时钟初始化*/
@@ -27,6 +28,8 @@ int main( void ) {
     MotoInit();
     /*串口初始化*/
     ComInit();
+    /*测试程序初始化*/
+    TestInit();
     /*开启全局中断*/
     INTEN
     while(1) {
@@ -34,5 +37,7 @@ int main( void ) {
         FeaturesHandle();
         /*电机位置检测*/
         MotoReadLimit();
+        /*按键测试任务*/
+        TestReadBu();
     }
 }

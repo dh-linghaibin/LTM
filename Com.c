@@ -86,6 +86,7 @@ void ComSend(u8 cmd, u8 dat1,u8 dat2,u8 dat3) {
 u8 ComGetFlag(void) { 
     return com_data_one.rs_ok;
 }
+
 /**********************************************函数定义***************************************************** 
 * 函数名称: u8 ComGetDate(u8 cmd) 
 * 输入参数: u8 cmd 
@@ -96,6 +97,40 @@ u8 ComGetFlag(void) {
 ************************************************************************************************************/ 
 u8 ComGetDate(u8 cmd) { 
     return com_data_one.data[cmd];
+}
+/**********************************************函数定义***************************************************** 
+* 函数名称: void ComSetFlag(u8 cmd) 
+* 输入参数: u8 cmd 
+* 返回参数: void  
+* 功    能:   
+* 作    者: by lhb_steven
+* 日    期: 2016/6/23
+************************************************************************************************************/ 
+void ComSetFlag(u8 cmd) { 
+    com_data_one.rs_ok = 0x00;
+}
+/**********************************************函数定义***************************************************** 
+* 函数名称: u8 ComCheck(void) 
+* 输入参数: void 
+* 返回参数: u8  
+* 功    能:   
+* 作    者: by lhb_steven
+* 日    期: 2016/6/23
+************************************************************************************************************/ 
+u8 ComCheck(void) { 
+    u16 num = 0;
+    for(u8 i = 1;i < 4;i++) {
+        num += com_data_one.data[i];
+    }
+    if(com_data_one.data[5] == (u8)num) {
+        if(com_data_one.data[6] == (u8)(num>>8)) {
+            return 0x01;
+        } else {
+            return 0x00;
+        }
+    } else {
+        return 0x00;
+    }
 }
 
 
@@ -113,10 +148,10 @@ __interrupt void UART1_RX_IRQHandler(void)
         }    
     }
     /*开始结束数据*/
-    if(com_data_one.rs_flag > 0x01) {
+    if(com_data_one.rs_flag > 0x00) {
         com_data_one.data[com_data_one.rs_flag-1] = data;
         com_data_one.rs_flag++;
-        if(com_data_one.rs_flag == com_size) {
+        if(com_data_one.rs_flag == com_size+1) {
             if(data == com_tail_frame) {
                 com_data_one.rs_ok = 0x01;
                 com_data_one.rs_flag = 0x00;

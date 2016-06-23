@@ -63,7 +63,7 @@ void MotoInit(void) {
     /*初始化电机速度*/
     moto_one.sleep = moto_start_sleep;
     /*初始化需要走的步数*/
-    moto_one.setp = moto_all_setp;
+    moto_one.setp = 0x00;
     /*开机运行关门*/
     MotoSet(dir_story);
 }
@@ -87,7 +87,9 @@ void MotoReadLimit(void) {
             /*关闭电机*/
             TIM4_CR1 = 0x00;  
             /*设置电机位置*/
-            moto_one.position = 0;
+            moto_one.position = dir_story;
+            /*结束*/
+            moto_one.setp = 0x00;
         }
     }
 }
@@ -100,25 +102,31 @@ void MotoReadLimit(void) {
 * 日    期: 2016/6/23
 ************************************************************************************************************/ 
 void MotoSet(moto_parameter diection) {
-    /*是否在需要到达的位置*/
-    if(diection == moto_one.position) {
-        
-    } else {
-        if(diection == dir_story) {
-            /*设置步进电机方向*/
-            moto_one.direction = dir_story;
+    if(moto_one.setp == 0x00) {//在运行的时候不能操作
+        /*是否在需要到达的位置*/
+        if(diection == moto_one.position) {
+            
         } else {
+            if(diection == dir_story) {
+                /*设置步进电机方向*/
+                moto_one.direction = dir_story;
+            } else {
+                /*设置步进电机方向*/
+                moto_one.direction = dir_reversion;
+            }
+            /*打开电机*/
+            MOTO_ENABLE = moto_open;
             /*设置步进电机方向*/
-            moto_one.direction = dir_reversion;
+            MOTO_DIRECTION = moto_one.direction;
+            /*初始化电机速度*/
+            moto_one.sleep = moto_start_sleep;
+            /*保存电机方向*/
+            moto_one.position = moto_one.direction;
+            /*打开电机*/
+            TIM4_CR1 = 0x01;  
+            /*开始*/
+            moto_one.setp = 0x01;
         }
-        /*打开电机*/
-        MOTO_ENABLE = moto_open;
-        /*设置步进电机方向*/
-        MOTO_DIRECTION = moto_one.direction;
-        /*初始化电机速度*/
-        moto_one.sleep = moto_start_sleep;
-        /*打开电机*/
-        TIM4_CR1 = 0x01;  
     }
 }
 
@@ -159,7 +167,7 @@ __interrupt void TIM4_UPD_OVF_IRQHandler(void)
                 }  
             }
              /*减速阶段*/
-            else if( (moto_one.all_setp > (moto_all_setp-100)) 
+            else if( (moto_one.all_setp > (moto_all_setp-20)) 
                     && (moto_one.all_setp < moto_all_setp) ){
                 /*开始减速*/
                 if(moto_one.sleep < moto_start_sleep) {
@@ -179,7 +187,9 @@ __interrupt void TIM4_UPD_OVF_IRQHandler(void)
                 /*打开电机*/
                 //MOTO_ENABLE = moto_open;
                 /*关闭电机*/
-                TIM4_CR1 = 0x00;  
+                TIM4_CR1 = 0x00; 
+                /*结束*/
+                moto_one.setp = 0x00;
             } else {
                 
             }
